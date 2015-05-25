@@ -1,0 +1,10 @@
+node_modules/
+npm-debug.log
+index.js
+bin/**/*.js
+lib/**/*.js
+modules/**/*.js
+test/**/*.js
+.idea
+test/built
+.DS_store
