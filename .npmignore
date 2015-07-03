@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+test
+typings
+**/*.ts
+tsd.json
+!lib/*.d.ts
+!index.d.ts

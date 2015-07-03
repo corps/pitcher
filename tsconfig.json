@@ -1,0 +1,55 @@
+{
+    "formatCodeOptions": {
+        "indentSize": 2,
+        "tabSize": 2,
+        "newLineCharacter": "\r\n",
+        "convertTabsToSpaces": true,
+        "insertSpaceAfterCommaDelimiter": true,
+        "insertSpaceAfterSemicolonInForStatements": true,
+        "insertSpaceBeforeAndAfterBinaryOperators": true,
+        "insertSpaceAfterKeywordsInControlFlowStatements": true,
+        "insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+        "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+        "placeOpenBraceOnNewLineForFunctions": false,
+        "placeOpenBraceOnNewLineForControlBlocks": false
+    },
+    "pitcher": {
+        "moduleGlob": "modules/*.ts"
+    },
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": true
+    },
+    "filesGlob": [
+        "index.d.ts",
+        "bin/*.ts",
+        "typings/all.d.ts",
+        "./index.ts",
+        "./lib/**/*.ts",
+        "./modules/**/*.ts",
+        "test/*.test.ts",
+        "test/utils/*.ts"
+    ],
+    "files": [
+        "index.d.ts",
+        "bin/pitcher.ts",
+        "typings/all.d.ts",
+        "./index.ts",
+        "./lib/async.d.ts",
+        "./lib/async.ts",
+        "./lib/generator-utils.d.ts",
+        "./lib/generator-utils.ts",
+        "./lib/generator.d.ts",
+        "./lib/generator.ts",
+        "./lib/runtime.d.ts",
+        "./lib/runtime.ts",
+        "./modules/analyzer.d.ts",
+        "./modules/analyzer.ts",
+        "./modules/run.d.ts",
+        "./modules/run.ts",
+        "test/async.test.ts",
+        "test/generator.test.ts",
+        "test/runtime.test.ts"
+    ]
+}

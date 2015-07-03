@@ -1,0 +1,39 @@
+{
+  "name": "pitcher",
+  "version": "0.1.0",
+  "description": "Small, code generated dependency injection for Typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha",
+    "build-lib-declarations": "./node_modules/.bin/tsc --target es5 --module commonjs typings/all.d.ts --declaration lib/*.ts",
+    "build-modules-declarations": "./node_modules/.bin/tsc --target es5 --module commonjs typings/all.d.ts --declaration modules/*.ts",
+    "build-declarations": "npm run build-lib-declarations && npm run build-modules-declarations",
+    "prepublish": "./node_modules/typescript/bin/tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/corps/pitcher.git"
+  },
+  "keywords": [
+    "typescript",
+    "dependency",
+    "injection",
+    "di"
+  ],
+  "author": "recursive.cookie.jar@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corps/pitcher/issues"
+  },
+  "homepage": "https://github.com/corps/pitcher",
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "commander": "^2.8.1",
+    "glob": "^5.0.5",
+    "tscripter": "^0.1.8",
+    "typescript": "^1.5.0-beta"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.4"
+  }
+}
