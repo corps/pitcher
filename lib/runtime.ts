@@ -12,6 +12,29 @@ export interface Module {
 }
 
 /**
+  Used by pitcher.forEntry to help typescript infer the graph type
+  based on the given entry module.  Convenience that maps to pitcher.build.
+  See pitcher.forEntry
+*/
+export class GraphBuilder<G> {
+  constructor(private entry: Builds<G>) { }
+  build(...modules: Builds<G>[]): G {
+    return build(this.entry, ...modules);
+  }
+}
+
+/**
+  A convenience wrapper around pitcher.build that helps typescript infer
+  the graph type.
+  eg pitcher.forEntry(new MyModule()).build(new OtherModule()) ==
+     pitcher.build<MyModuleGraph>(new MyModule(), new OtherModule());
+  See pitcher.build for details.
+*/
+export function forEntry<G>(entry: Builds<G>): GraphBuilder<G> {
+  return new GraphBuilder<G>(entry);
+}
+
+/**
   Generates a ModuleGraph G given an entry module that constructs the
   initial graph's providers, and an optional series of override modules
   that provide redefinitions of existing providers.

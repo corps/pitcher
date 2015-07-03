@@ -5,6 +5,8 @@ bin/**/*.js
 lib/**/*.js
 modules/**/*.js
 test/**/*.js
+example/**/*.js
+example/npm-debug.log
 .idea
 test/built
 .DS_store

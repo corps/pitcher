@@ -30,8 +30,15 @@ export interface GeneratorConfig {
     */
     moduleSrcDir?: string;
     /**
-      defaults to true. when false, generates output even when syntax errors exist
-      in the original source.
+      when true, pitcher will fail when any of the original source files
+      contain errors according to the typescript compiler.  Not needed in
+      most cases, but can be useful in certain build setups where earlier
+      failures are useful, or to save resources when watching file changes.
+      NOTE: When using this mode, make sure your output directory is different
+      from your source directory.  If you provide strict mode when writing modules
+      to the same source, you may get 'stuck' when changing a provider name breaks
+      the generated code.  In general, don't use this unless you know what you
+      are doing.
     */
     strictMode?: boolean;
 }

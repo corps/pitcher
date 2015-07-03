@@ -6,3 +6,6 @@ typings
 tsd.json
 !lib/*.d.ts
 !index.d.ts
+!generator.d.ts
+.travis.yml
+example

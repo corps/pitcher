@@ -1,0 +1,39 @@
+{
+    "formatCodeOptions": {
+        "indentSize": 2,
+        "tabSize": 2,
+        "newLineCharacter": "\n",
+        "convertTabsToSpaces": true,
+        "insertSpaceAfterCommaDelimiter": true,
+        "insertSpaceAfterSemicolonInForStatements": true,
+        "insertSpaceBeforeAndAfterBinaryOperators": true,
+        "insertSpaceAfterKeywordsInControlFlowStatements": true,
+        "insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+        "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+        "placeOpenBraceOnNewLineForFunctions": false,
+        "placeOpenBraceOnNewLineForControlBlocks": false
+    },
+    "pitcher": {
+        "moduleGlob": "modules/*.ts",
+        "strictMode": false
+    },
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": true
+    },
+    "filesGlob": [
+        "typings/tsd.d.ts",
+        "modules/*.ts",
+        "test/*.ts"
+    ],
+    "files": [
+        "typings/tsd.d.ts",
+        "modules/app.ts",
+        "modules/console-logger.ts",
+        "modules/fake-console.ts",
+        "modules/fake-time.ts",
+        "modules/logger.ts",
+        "test/app.test.ts"
+    ]
+}

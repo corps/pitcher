@@ -35,6 +35,10 @@ if (configFilePath == null) {
 }
 
 var configJSON = ts.readConfigFile(configFilePath);
+if (configJSON == null) {
+  failHard(configFilePath + " was not valid json!");
+}
+
 var tsConfig = ts.parseConfigFile(configJSON, path.join(configFilePath, ".."));
 var generatorConfig = <run.GeneratorConfig>(configJSON.pitcher || {});
 
@@ -55,9 +59,9 @@ function preformRun() {
   console.log("pitcher code generator running...");
   var startTime = new Date();
   return new Promise<string[]>((resolve: (r: string[]) => void, reject: any) => {
-    var runGraph = pitcher.build<run.ModuleGraph>(
-      new run.Module(generatorConfig),
-      new analyzer.Module({ projectDir: programOpts.project }));
+    var runGraph = pitcher
+      .forEntry(new run.Module(generatorConfig))
+      .build(new analyzer.Module({ projectDir: programOpts.project }));
 
     runGraph.runProvider.get((run, err) => {
       if (err) {

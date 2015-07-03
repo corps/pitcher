@@ -2,7 +2,7 @@
     "formatCodeOptions": {
         "indentSize": 2,
         "tabSize": 2,
-        "newLineCharacter": "\r\n",
+        "newLineCharacter": "\n",
         "convertTabsToSpaces": true,
         "insertSpaceAfterCommaDelimiter": true,
         "insertSpaceAfterSemicolonInForStatements": true,
@@ -23,6 +23,7 @@
     },
     "filesGlob": [
         "index.d.ts",
+        "generator.d.ts",
         "bin/*.ts",
         "typings/all.d.ts",
         "./index.ts",
@@ -33,6 +34,7 @@
     ],
     "files": [
         "index.d.ts",
+        "generator.d.ts",
         "bin/pitcher.ts",
         "typings/all.d.ts",
         "./index.ts",
