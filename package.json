@@ -1,8 +1,12 @@
 {
   "name": "pitcher",
-  "version": "0.1.0",
-  "description": "Small, code generated dependency injection for Typescript",
+  "version": "0.1.4",
+  "description": "Code generated dependency injection for Typescript",
   "main": "index.js",
+  "typescript": {
+    "definition": "index.d.ts"
+  },
+  "bin": "bin/pitcher",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
     "build-lib-declarations": "./node_modules/.bin/tsc --target es5 --module commonjs typings/all.d.ts --declaration lib/*.ts",

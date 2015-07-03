@@ -35,8 +35,15 @@ export interface GeneratorConfig {
   */
   moduleSrcDir?: string
   /**
-    defaults to true. when false, generates output even when syntax errors exist
-    in the original source.
+    when true, pitcher will fail when any of the original source files
+    contain errors according to the typescript compiler.  Not needed in
+    most cases, but can be useful in certain build setups where earlier
+    failures are useful, or to save resources when watching file changes.
+    NOTE: When using this mode, make sure your output directory is different
+    from your source directory.  If you provide strict mode when writing modules
+    to the same source, you may get 'stuck' when changing a provider name breaks
+    the generated code.  In general, don't use this unless you know what you
+    are doing.
   */
   strictMode?: boolean
 }
@@ -48,7 +55,7 @@ export class Module implements pitcher.Builds<ModuleGraph> {
   includes = [AnalyzerModule];
   providedSrcDir = this.config.moduleSrcDir || "";
   providedOutputDir = this.config.moduleOutputDir || this.providedSrcDir;
-  providedStrictMode = this.config.strictMode == null ? true : this.config.strictMode;
+  providedStrictMode = this.config.strictMode == null ? false : this.config.strictMode;
   providesRunFactory = pitcher.factory(generator.Run);
   providesRun = (runFactory: () => generator.Run) => () => runFactory().run();
 
