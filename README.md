@@ -1,4 +1,5 @@
 # pitcher
+![build status](https://travis-ci.org/corps/pitcher.svg)
 
 Code-generated, type-strong dependency injection for typescript.  
 Pour yourself a delicious glass of sweet, sweet dependencies.
@@ -6,13 +7,13 @@ Pour yourself a delicious glass of sweet, sweet dependencies.
 * [Introduction](#introduction)
 * [Setup](#setup)
 * [Usage](#usage)
-* [Generator Integration Setup](#advanced-setup)
+* [Documentation](#documentation)
 
 ## Introduction
 
 Inspired by the DI tools of [angular 1.x](https://docs.angularjs.org/guide/di) and [Dagger](http://square.github.io/dagger/), pitcher aims to be the best of the two approaches: code generation for early error checking, and argument names as convention for simple configuration.
 
-Setup is similar to angular -- Let's create a "module" class that provides an instance of a `CoffeePump` service. 
+Setup is similar to angular -- Let's create a "module" class that provides an instance of a `CoffeePump` service.
 
 ```typescript
 class CoffeeModule implements pitcher.Module {
@@ -98,12 +99,6 @@ If you are using [tsd](https://github.com/DefinitelyTyped/tsd), you can then `ts
   })
   ```
 
-#### Long Explanation
+#### Documentation
 
-See the [github wiki](http://github.com/corps/pitcher/wiki) for documentation, or check the repo for examples.
-
-## Advanced Setup
-
-In order to run the generator programmatically, you'll need to reference the `generator.d.ts` **which is not linked with `tsd link` by default**.
-
-You will also need to reference  `typescript.d.ts`, which you can obtain in the bin directory of typescript itself.  **You do not need this to use pitcher normally**.
+See the [github wiki](http://github.com/corps/pitcher/wiki) for documentation and further tutorial resources.

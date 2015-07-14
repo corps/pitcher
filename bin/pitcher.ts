@@ -55,7 +55,7 @@ function formatTime(startTime: Date) {
 }
 
 // TODO: Make this alot faster via deeper integration with language host.
-function preformRun() {
+function performRun() {
   console.log("pitcher code generator running...");
   var startTime = new Date();
   return new Promise<string[]>((resolve: (r: string[]) => void, reject: any) => {
@@ -82,7 +82,7 @@ function preformRun() {
   });
 }
 
-var finishRun = preformRun();
+var finishRun = performRun();
 if (programOpts.watch) {
   function watchThenRerun() {
     finishRun = finishRun.then((watchFiles) => {
@@ -93,7 +93,7 @@ if (programOpts.watch) {
             console.log("found change, waiting " + programOpts.batch + "ms");
             fileWatchers.forEach(w => w.close());
             setTimeout(() => {
-              preformRun().then(resolve, reject);
+              performRun().then(resolve, reject);
             }, programOpts.batch)
           });
         })

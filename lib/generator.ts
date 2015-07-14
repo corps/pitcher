@@ -195,6 +195,7 @@ export class Provider {
     if (this.providedKind == ProvidedKind.SINGLETON) {
       var isFactory = this.determineIfFactoryProvider();
       var constructor = this.findValidSignature(propertyType.getConstructSignatures(), "class");
+
       if (constructor != null) {
         return [isFactory ? ProviderKind.FACTORY_CLASS : ProviderKind.CLASS, constructor];
       }
@@ -256,6 +257,10 @@ export class Provider {
     }
 
     return null;
+  }
+
+  get classConstruction() {
+    return this.providerKind == ProviderKind.CLASS || this.providerKind == ProviderKind.FACTORY_CLASS;
   }
 
   get onlyGiven() {
@@ -841,9 +846,10 @@ export class InstallWriter {
       func.elements.push(utils.newlineIndentions[3]);
       func.elements.push(new statements.Call(
         InstallWriter.resolveIdent, [
-          new statements.Call(
-            utils.propIdentifier(["this", provider.propertyName(false)]))
-        ]))
+          this.wrapProviderInvocation(provider,
+            new statements.Call(
+              utils.propIdentifier(["this", provider.propertyName(false)]))
+            )]));
       func.elements.push(utils.newlineIndentions[2]);
       return;
     } else {
@@ -880,22 +886,22 @@ export class InstallWriter {
     func.elements.push(utils.newlineIndentions[2]);
   }
 
-  private writeResolverBody(func: statements.Lambda, provider: Provider) {
-    var resolveResult: statements.Expression;
+  private wrapProviderInvocation(provider: Provider, call: statements.Call): statements.Expression {
+    if (provider.classConstruction) {
+      return new statements.New(call);
+    }
 
+    return call;
+  }
+
+  private writeResolverBody(func: statements.Lambda, provider: Provider) {
     var args = provider.localDependencies.map<statements.Expression>(
       d => new statements.ElementAccess(
         utils.propIdentifier([d]), new statements.AtomicValue("0")));
 
-    var providerCall = new statements.Call(
-      utils.propIdentifier(["this", provider.propertyName(false)]),
-      args)
-
-    if ([ProviderKind.CLASS, ProviderKind.FACTORY_CLASS].indexOf(provider.providerKind) != -1) {
-      resolveResult = new statements.New(providerCall);
-    } else {
-      resolveResult = providerCall;
-    }
+    var resolveResult = this.wrapProviderInvocation(provider,
+      new statements.Call(
+        utils.propIdentifier(["this", provider.propertyName(false)]), args));
 
     if ([ProviderKind.FACTORY_CLASS, ProviderKind.FACTORY_METHOD].indexOf(provider.providerKind) != -1) {
       var factory = new statements.Lambda(new statements.CallableSignature(null));

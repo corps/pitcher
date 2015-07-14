@@ -223,14 +223,14 @@ describe("generator.Run", () => {
     "rewrite-install-signature.ts",
     "given-as-constructor-property.ts"
   ], (fixtureNames: string[]) => {
-    fixtureNames.forEach((fixtureName) => {
-      it("provides expected results from " + fixtureName, () => {
-        var graph = pitcher.build(new ModuleClasses[fixtureName]);
-        var key = graph.theSecretKeyProvider.get()[0];
-        assert.equal(key, 15);
+      fixtureNames.forEach((fixtureName) => {
+        it("provides expected results from " + fixtureName, () => {
+          var graph = pitcher.build(new ModuleClasses[fixtureName]);
+          var key = graph.theSecretKeyProvider.get()[0];
+          assert.equal(key, 15);
+        });
       });
     });
-  });
 
   forValidGeneratedModules("property-is-totes-ok.ts", () => {
     it("provides expected results", () => {
@@ -268,6 +268,14 @@ describe("generator.Run", () => {
         assert.equal(value, "given");
       })
     });
+  });
+
+  forValidGeneratedModules(["no-constructor-class.ts"], () => {
+    it("still invokves the constructor via new", () => {
+      var graph = pitcher.build(new ModuleClasses["no-constructor-class.ts"]);
+      var value = graph.noConstructorProvider.get()[0];
+      assert.deepEqual(value, { a: 1 });
+    })
   });
 
   generatorShouldFailWith("collection-circular-dependency.ts",
