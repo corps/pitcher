@@ -91,7 +91,7 @@ If you are using [tsd](https://github.com/DefinitelyTyped/tsd), you can then `ts
 
   ```typescript
   import pitcher = require("pitcher");
-  import { AppModule } from"modules/app";
+  import { AppModule } from "modules/app";
 
   pitcher.build(new AppModule()).serverProvider.get((server, err) => {
       server.endpoints.forEach((e) => e());
