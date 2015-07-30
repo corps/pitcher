@@ -35,12 +35,15 @@ if (configFilePath == null) {
 }
 
 var configJSON = ts.readConfigFile(configFilePath);
-if (configJSON == null) {
+if (configJSON == null || configJSON.error) {
+  if (configJSON.error) {
+    failHard(`${configFilePath}:${configJSON.error.start} ${configJSON.error.messageText}`);
+  }
   failHard(configFilePath + " was not valid json!");
 }
 
-var tsConfig = ts.parseConfigFile(configJSON, path.join(configFilePath, ".."));
-var generatorConfig = <run.GeneratorConfig>(configJSON.pitcher || {});
+var tsConfig = ts.parseConfigFile(configJSON.config, ts.sys, path.join(configFilePath, ".."));
+var generatorConfig = <run.GeneratorConfig>(configJSON.config.pitcher || {});
 
 function recoverOrExit(reason: any) {
   console.error(reason);

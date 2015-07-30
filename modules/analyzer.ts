@@ -40,10 +40,10 @@ export class Module implements pitcher.Builds<ModuleGraph> {
     var configFilePath = ts.findConfigFile(projectDir);
     if (configFilePath == null) throw new Error("Could not find project in or parent of " + projectDir);
     var configJSON = ts.readConfigFile(configFilePath);
-    var config = ts.parseConfigFile(configJSON, path.join(configFilePath, ".."));
+    var config = ts.parseConfigFile(configJSON.config, ts.sys, path.join(configFilePath, ".."));
 
     for (var diagnostic of config.errors) {
-      if (diagnostic.category = ts.DiagnosticCategory.Error) {
+      if (diagnostic.category == ts.DiagnosticCategory.Error) {
         var message = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
         throw new Error(message);
       }
@@ -61,7 +61,7 @@ export class Module implements pitcher.Builds<ModuleGraph> {
   providesAnalyzerHost(
     moduleSources: string[],
     tsProgram: ts.Program
-    ) {
+  ) {
     return new analyzer.AnalyzerHost(tsProgram || moduleSources);
   }
 
@@ -75,7 +75,7 @@ export class Module implements pitcher.Builds<ModuleGraph> {
 
 
     graph.projectDirProvider = pitcher.singletonProvider(graph.projectDirProvider)((resolve) => {
-      if (this.providedProjectDir !== undefined) {resolve(this.providedProjectDir);return;}
+      if (this.providedProjectDir !== undefined) { resolve(this.providedProjectDir); return; }
 
       resolve(this.providesProjectDir());
     });
@@ -89,12 +89,12 @@ export class Module implements pitcher.Builds<ModuleGraph> {
     });
 
     graph.tsProgramProvider = pitcher.singletonProvider(graph.tsProgramProvider)((resolve, reject) => {
-      if (this.providedTsProgram !== undefined) {resolve(this.providedTsProgram);return;}
+      if (this.providedTsProgram !== undefined) { resolve(this.providedTsProgram); return; }
 
       var moduleSources = graph.moduleSourcesProvider.get();
       var projectConfig = graph.projectConfigProvider.get();
 
-      pitcher.awaitAll([moduleSources[2],projectConfig[2]], (_, err) => {
+      pitcher.awaitAll([moduleSources[2], projectConfig[2]], (_, err) => {
         err ? reject(err) : resolve(this.providesTsProgram(moduleSources[0], projectConfig[0]));
       });
     });
@@ -103,13 +103,13 @@ export class Module implements pitcher.Builds<ModuleGraph> {
       var moduleSources = graph.moduleSourcesProvider.get();
       var tsProgram = graph.tsProgramProvider.get();
 
-      pitcher.awaitAll([moduleSources[2],tsProgram[2]], (_, err) => {
+      pitcher.awaitAll([moduleSources[2], tsProgram[2]], (_, err) => {
         err ? reject(err) : resolve(this.providesAnalyzerHost(moduleSources[0], tsProgram[0]));
       });
     });
 
     graph.moduleSourcesCollection = graph.moduleSourcesCollection || [];
-    graph.moduleSourcesCollection.push(pitcher.singletonProvider(graph.moduleSourcesProvider)((resolve) =>resolve(this.contributedModuleSources)));
+    graph.moduleSourcesCollection.push(pitcher.singletonProvider(graph.moduleSourcesProvider)((resolve) => resolve(this.contributedModuleSources)));
     if (graph.moduleSourcesProvider == null) graph.moduleSourcesProvider = pitcher.collectionProvider(graph.moduleSourcesProvider)(graph.moduleSourcesCollection);
   }
 }

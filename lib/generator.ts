@@ -360,7 +360,7 @@ export class ModuleRun {
       var extendedName = this.moduleClass.implementedInterfaces[i];
       let type = <ts.InterfaceType>this.sourceRun.typechecker.getTypeAtLocation(extendedName.node);
       let program = this.sourceRun.run.analyzerHost.program;
-      let heritageClause = <ts.HeritageClauseElement>extendedName.node;
+      let heritageClause = <ts.ExpressionWithTypeArguments>extendedName.node;
 
       if (utils.isRuntimeSymbol(type.symbol, "Module", program)) {
         this.pitcherQualification = extendedName.name.qualification;

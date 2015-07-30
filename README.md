@@ -42,7 +42,7 @@ npm install pitcher --save
 
 If you are using [tsd](https://github.com/DefinitelyTyped/tsd), you can then `tsd link` to add pitcher's .d.ts file to your project.  If not, you'll need to add a reference to `index.d.ts` directly to your project.
 
-**pitcher currently only supports typescript >= 1.5.0-beta**, requiring the improved type inference for the resulting code.
+**pitcher currently only supports typescript >= 1.5.3**, requiring the improved type inference for the resulting code.
 
 ## Usage
 
