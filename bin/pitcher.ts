@@ -19,7 +19,7 @@ function failHard(reason: any) {
 }
 
 program
-  .version('0.0.1')
+  .version('0.2.2')
   .option('-p, --project <dir>', 'specify the directory from which to search for tsconfig.json file to load pitcher configuration.  defaults to the working directory')
   .option('-w, --watch', 'will continue to watch for file changes and rerun the process when detected')
   .option('-b, --batch <ms>', 'when watch is provided, after detecting a file change, the watch will wait the given ms before executing another run.  defaults to 500', parseInt)
@@ -42,8 +42,23 @@ if (configJSON == null || configJSON.error) {
   failHard(configFilePath + " was not valid json!");
 }
 
-var tsConfig = ts.parseConfigFile(configJSON.config, ts.sys, path.join(configFilePath, ".."));
+var relativePath = path.join(configFilePath, "..");
+var tsConfig = ts.parseConfigFile(configJSON.config, ts.sys, relativePath);
 var generatorConfig = <run.GeneratorConfig>(configJSON.config.pitcher || {});
+
+if (generatorConfig.moduleGlob != null)
+  generatorConfig.moduleGlob = path.join(relativePath, generatorConfig.moduleGlob);
+
+if (generatorConfig.moduleSrcDir != null)
+  generatorConfig.moduleSrcDir = path.join(relativePath, generatorConfig.moduleSrcDir);
+
+if (generatorConfig.moduleOutputDir != null)
+  generatorConfig.moduleOutputDir = path.join(relativePath, generatorConfig.moduleSrcDir);
+
+if (generatorConfig.moduleFiles != null)
+  generatorConfig.moduleFiles.forEach((filePath, i) => {
+    generatorConfig.moduleFiles[i] = path.join(relativePath, filePath);
+  })
 
 function recoverOrExit(reason: any) {
   console.error(reason);

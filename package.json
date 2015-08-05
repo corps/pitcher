@@ -1,6 +1,6 @@
 {
   "name": "pitcher",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Code generated dependency injection for Typescript",
   "main": "index.js",
   "typescript": {
@@ -35,7 +35,7 @@
     "commander": "^2.8.1",
     "glob": "^5.0.5",
     "tscripter": "^0.2.3",
-    "typescript": "^1.5.3"
+    "typescript": "~1.5.3"
   },
   "devDependencies": {
     "mocha": "^2.2.4"

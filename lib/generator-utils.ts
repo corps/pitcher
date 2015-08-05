@@ -31,8 +31,8 @@ export function writeFile(fileName: string, data: any): Promise<any> {
 }
 
 export enum ExpectedType {
-  CLASS = ts.SyntaxKind.ClassDeclaration.valueOf(),
-  INTERFACE = ts.SyntaxKind.InterfaceDeclaration.valueOf()
+  CLASS = parseInt(ts.SyntaxKind.ClassDeclaration + ""),
+  INTERFACE = parseInt(ts.SyntaxKind.InterfaceDeclaration + "")
 }
 
 const EXPECTED_TYPE_NAMES: { [k: number]: string } = {};
@@ -139,8 +139,7 @@ export function statementsEqual(s1: statements.CodeNode[], s2: statements.CodeNo
 }
 
 /**
-  Used by pitcher to determine if the given symbol matches the runtime environment's
-  respective pitcher symbol named by name.
+  Used by pitcher to determine if the given symbol belongs to pitcher's runtime
 */
 export function isRuntimeSymbol(symbol: ts.Symbol, name: string, program: ts.Program) {
   if (symbol == null) return false;
@@ -151,7 +150,10 @@ export function isRuntimeSymbol(symbol: ts.Symbol, name: string, program: ts.Pro
 
   var sourceFileName = declarations[0].getSourceFile().fileName;
   sourceFileName = path.join(program.getCurrentDirectory(), sourceFileName);
-  return sourceFileName.indexOf(__dirname) == 0;
+
+  var parts = sourceFileName.split(path.sep);
+  var imported = parts.slice(parts.length - 4, parts.length - 1).join("/") == "node_modules/pitcher/lib";
+  return imported || sourceFileName.indexOf(__dirname) == 0;
 }
 
 export function qualifiedNameOfInclude(expression: statements.CodeNode): statements.QualifiedName {
